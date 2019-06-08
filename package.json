@@ -5,6 +5,7 @@
   "description": "A tiny (250B) utility to remove items recursively",
   "module": "dist/premove.mjs",
   "main": "dist/premove.js",
+  "types": "premove.d.ts",
   "license": "MIT",
   "author": {
     "name": "Luke Edwards",
@@ -20,6 +21,7 @@
     "test": "tape test/*.js | tap-spec"
   },
   "files": [
+    "*.d.ts",
     "dist"
   ],
   "keywords": [
