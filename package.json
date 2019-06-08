@@ -2,7 +2,7 @@
   "name": "premove",
   "version": "0.0.0",
   "repository": "lukeed/premove",
-  "description": "A tiny (250B) utility to remove items recursively",
+  "description": "A tiny (247B) utility to remove items recursively",
   "module": "dist/premove.mjs",
   "main": "dist/premove.js",
   "types": "premove.d.ts",

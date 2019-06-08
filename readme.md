@@ -1,6 +1,6 @@
 # premove [![Build Status](https://badgen.now.sh/travis/lukeed/premove)](https://travis-ci.org/lukeed/premove)
 
-> A tiny (250B) utility to remove items recursively
+> A tiny (247B) utility to remove items recursively
 
 This is a `Promise`-based utility that recursively removes files and directories.<br>
 It's effectively `rm -rf` for Node.js
