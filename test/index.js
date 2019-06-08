@@ -127,3 +127,27 @@ test('remove directory recursively', async t => {
 
 	t.end();
 });
+
+test('file does not exist', async t => {
+	let file = await premove('./404.txt');
+	t.is(file, false, '~> (file) returns false when missing');
+
+	let dir = await premove('./foo');
+	t.is(dir, false, '~> (dir) returns false when missing');
+
+	t.end();
+});
+
+test('options.cwd', async t => {
+	let file = await touch('./foo/hello.txt');
+	let dir = dirname(file);
+
+	t.exists(file, true, '(setup) file exists');
+	await premove('hello.txt', { cwd: dir });
+	t.exists(file, false, '~> removed file');
+
+	await premove(dir);
+	t.exists(dir, false, '~> cleanup');
+
+	t.end();
+});
