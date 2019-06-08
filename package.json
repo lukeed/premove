@@ -1,0 +1,35 @@
+{
+  "name": "premove",
+  "version": "0.0.0",
+  "repository": "lukeed/premove",
+  "description": "A tiny (250B) utility to remove items recursively",
+  "module": "dist/premove.mjs",
+  "main": "dist/premove.js",
+  "license": "MIT",
+  "author": {
+    "name": "Luke Edwards",
+    "email": "luke.edwards05@gmail.com",
+    "url": "lukeed.com"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "build": "bundt",
+    "pretest": "npm run build",
+    "test": "tape test/*.js | tap-spec"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "del",
+    "remove",
+    "rimraf"
+  ],
+  "devDependencies": {
+    "bundt": "^0.4.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.1"
+  }
+}
