@@ -1,17 +1,8 @@
 # premove [![Build Status](https://badgen.now.sh/travis/lukeed/premove)](https://travis-ci.org/lukeed/premove)
 
-> A tiny (247B) utility to remove items recursively
+> A tiny (201B to 247B) utility to remove items recursively
 
-This is a `Promise`-based utility that recursively removes files and directories.<br>
-It's effectively `rm -rf` for Node.js
-
-Available in these formats:
-
-* **ES Module**: `dist/premove.mjs`
-* **CommonJS**: `dist/premove.js`
-
-> **Important:** Requires Node 8.x or later – uses `async` functions.
-
+This is a `Promise`-based utility that recursively removes files and directories. It's effectively `rm -rf` for Node.js.
 
 ## Install
 
@@ -20,11 +11,34 @@ $ npm install --save premove
 ```
 
 
+## Modes
+
+There are two "versions" of `premove` available:
+
+#### "async"
+> **Node.js:** >= 8.x<br>
+> **Size (gzip):** 247 bytes<br>
+> **Availability:** [CommonJS](https://unpkg.com/premove/dist/index.js), [ES Module](https://unpkg.com/premove/dist/index.mjs)
+
+This is the primary/default mode. It makes use of `async`/`await` and [`util.promisify`](https://nodejs.org/api/util.html#util_util_promisify_original).
+
+#### "sync"
+> **Node.js:** >= 6.x<br>
+> **Size (gzip):** 201 bytes<br>
+> **Availability:** [CommonJS](https://unpkg.com/premove/sync/index.js), [ES Module](https://unpkg.com/premove/sync/index.mjs)
+
+This is the opt-in mode, ideal for scenarios where `async` usage cannot be supported.<br>In order to use it, simply make the following changes:
+
+```diff
+-import premove from 'premove';
++import premove from 'premove/sync';
+```
+
 ## Usage
 
 ```js
-import { resolve } from 'path';
 import premove from 'premove';
+import { resolve } from 'path';
 
 // Async/await
 try {
@@ -54,6 +68,8 @@ Returns: `Promise<undefined>` or `false`
 Returns a Promise that resolves to `undefined` once complete.<br>
 Returns `false` immediately if the initial filepath (`str`) does not exist.
 
+> **Important:**<br>The `sync` and `async` versions share the same API.<br>The **only** difference is that `sync` is not Promise-based.
+
 #### str
 Type: `String`
 
@@ -73,8 +89,9 @@ Defaults to the `process.cwd()` – aka, the directory that your command is run 
 
 ## Related
 
-- [`mk-dirs`](https://github.com/lukeed/mk-dirs) – Create directories recursively
-- [`del`](https://www.npmjs.com/package/del) - Delete files and folders using globs
+- [totalist](https://github.com/lukeed/totalist) - A tiny (195B to 224B) utility to recursively list all (total) files in a directory
+- [mk-dirs](https://github.com/lukeed/mk-dirs) - A tiny (420B) utility to make a directory and its parents, recursively
+- [escalade](https://github.com/lukeed/escalade) - A tiny (183B) and fast utility to ascend parent directories
 
 
 ## License
