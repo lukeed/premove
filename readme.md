@@ -4,6 +4,8 @@
 
 This is a `Promise`-based utility that recursively removes files and directories. It's effectively `rm -rf` for Node.js.
 
+> **Notice:** Node v12.10.0 includes the `recursive` option for [`fs.rmdir`](https://nodejs.org/api/fs.html#fs_fs_rmdir_path_options_callback) and [`fs.rmdirSync`](https://nodejs.org/api/fs.html#fs_fs_rmdirsync_path_options).
+
 ## Install
 
 ```
