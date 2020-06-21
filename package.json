@@ -10,7 +10,7 @@
   "author": {
     "name": "Luke Edwards",
     "email": "luke.edwards05@gmail.com",
-    "url": "lukeed.com"
+    "url": "https://lukeed.com"
   },
   "engines": {
     "node": ">=8"
@@ -18,7 +18,7 @@
   "scripts": {
     "build": "bundt",
     "pretest": "npm run build",
-    "test": "tape test/*.js | tap-spec"
+    "test": "uvu -r esm test"
   },
   "files": [
     "*.d.ts",
@@ -30,8 +30,9 @@
     "rimraf"
   ],
   "devDependencies": {
-    "bundt": "^0.4.0",
-    "tap-spec": "^5.0.0",
-    "tape": "^4.9.1"
+    "bundt": "1.0.1",
+    "esm": "3.2.25",
+    "mk-dirs": "2.0.0",
+    "uvu": "0.0.14"
   }
 }

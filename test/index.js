@@ -1,109 +1,99 @@
-const fs = require('fs');
-const test = require('tape');
-const mkdirs = require('mk-dirs');
-const { promisify } = require('util');
-const premove = require('../dist/premove');
-const { dirname, resolve } = require('path');
+import fs from 'fs';
+import { test } from 'uvu';
+import mkdirs from 'mk-dirs';
+import * as assert from 'uvu/assert';
+import { dirname, resolve } from 'path';
+import { promisify } from 'util';
+import premove from '../src';
 
 const write = promisify(fs.writeFile);
 
-function touch(str) {
+async function touch(str) {
 	let dir = dirname(str = resolve(str));
-	return mkdirs(dir).then(() => write(str, 'hello')).then(() => str);
+	await mkdirs(dir).then(() => write(str, 'hello'));
+	return str;
 }
 
-test.Test.prototype.exists = function (str, bool, msg) {
+function exists(str, bool, msg) {
 	msg = msg || (bool ? '~> (setup) exists' : '~> does not exist');
-	this.is(fs.existsSync(str), bool, msg);
-};
+	assert.is(fs.existsSync(str), bool, msg);
+}
 
-test('exports', t => {
-	t.is(typeof premove, 'function', 'a function');
-	t.end();
+test('exports', () => {
+	assert.type(premove, 'function');
 });
 
-test('remove single file', async t => {
+test('remove single file', async () => {
 	let foo = await touch('./foo.txt');
 	let bar = await touch('./bar.txt');
 
-	t.exists(foo, true);
-	t.exists(bar, true);
+	exists(foo, true);
+	exists(bar, true);
 
 	let out = await premove(foo);
-	t.is(out, undefined, '~> returns no output');
+	assert.is(out, undefined, '~> returns no output');
 
-	t.exists(foo, false, '~> (foo) removed');
-	t.exists(bar, true, '~> (bar) exists');
+	exists(foo, false, '~> (foo) removed');
+	exists(bar, true, '~> (bar) exists');
 
 	await premove(bar); // cleanup
-	t.exists(bar, false, '~> (bar) removed');
-
-	t.end();
+	exists(bar, false, '~> (bar) removed');
 });
 
-test('remove single directory', async t => {
+test('remove single directory', async () => {
 	let str = resolve('./foo');
 	await mkdirs(str);
-
-	t.exists(str, true);
+	exists(str, true);
 
 	await premove(str);
-	t.exists(str, false, '~> removed dir');
-
-	t.end();
+	exists(str, false, '~> removed dir');
 });
 
-test('remove file, leave directory', async t => {
+test('remove file, leave directory', async () => {
 	let foo = await touch('./bar/foo.txt');
 	let bar = dirname(foo);
-	t.exists(foo, true);
+	exists(foo, true);
 
 	await premove(foo);
-	t.exists(foo, false, '~> (foo) file removed');
-	t.exists(bar, true, '~> (bar) dir exists');
+	exists(foo, false, '~> (foo) file removed');
+	exists(bar, true, '~> (bar) dir exists');
 
 	await premove(bar); // cleanup
-	t.exists(bar, false, '~> (bar) removed');
-
-	t.end();
+	exists(bar, false, '~> (bar) removed');
 });
 
-test('remove directory and its contents', async t => {
+test('remove directory and its contents', async () => {
 	let file = await touch('./foo/bar.txt');
 	let dir = dirname(file);
 
-	t.exists(dir, true, '(setup) dir exists');
-	t.exists(file, true, '(setup) file exists');
+	exists(dir, true, '(setup) dir exists');
+	exists(file, true, '(setup) file exists');
 
 	await premove(dir);
-	t.exists(dir, false, '~> (dir) removed');
-	t.exists(file, false, '~> (file) removed');
-
-	t.end();
+	exists(dir, false, '~> (dir) removed');
+	exists(file, false, '~> (file) removed');
 });
 
-test('remove directory, leave parent', async t => {
+test('remove directory, leave parent', async () => {
 	let file = await touch('./foo/bar/baz/bat/hello.txt');
 	let baz = resolve('./foo/bar/baz');
 	let dir = dirname(file);
 
-	t.exists(dir, true, '(setup) dir exists');
-	t.exists(file, true, '(setup) file exists');
-	t.exists(baz, true, '(setup) "baz" exists');
+	exists(dir, true, '(setup) dir exists');
+	exists(file, true, '(setup) file exists');
+	exists(baz, true, '(setup) "baz" exists');
 
 	await premove(dir);
-	t.exists(dir, false, '~> (dir) removed');
-	t.exists(file, false, '~> (file) removed');
-	t.exists(baz, true, '~> (baz) still exists');
+	exists(dir, false, '~> (dir) removed');
+	exists(file, false, '~> (file) removed');
+	exists(baz, true, '~> (baz) still exists');
 
 	let foo = resolve('./foo');
 	await premove(foo);
-	t.exists(foo, false, '~> cleanup');
-
-	t.end();
+	exists(foo, false, '~> cleanup');
 });
 
-test('remove directory recursively', async t => {
+test('remove directory recursively', async () => {
 	let f1 = await touch('./foo/bar/baz/bat/hello.txt');
 	let f2 = await touch('./foo/bar/baz/bat/world.txt');
 	let f3 = await touch('./foo/bar/baz/hello.txt');
@@ -111,43 +101,40 @@ test('remove directory recursively', async t => {
 
 	let dir = resolve('./foo');
 
-	t.exists(dir, true, '(setup) dir exists');
-	t.exists(f1, true, '(setup) f1 exists');
-	t.exists(f2, true, '(setup) f2 exists');
-	t.exists(f3, true, '(setup) f3 exists');
-	t.exists(f4, true, '(setup) f4 exists');
+	exists(dir, true, '(setup) dir exists');
+	exists(f1, true, '(setup) f1 exists');
+	exists(f2, true, '(setup) f2 exists');
+	exists(f3, true, '(setup) f3 exists');
+	exists(f4, true, '(setup) f4 exists');
 
 	await premove(dir);
 
-	t.exists(dir, false, '~> (dir) removed');
-	t.exists(f1, false, '~> (f1) removed');
-	t.exists(f2, false, '~> (f2) removed');
-	t.exists(f3, false, '~> (f3) removed');
-	t.exists(f4, false, '~> (f4) removed');
+	exists(dir, false, '~> (dir) removed');
+	exists(f1, false, '~> (f1) removed');
+	exists(f2, false, '~> (f2) removed');
+	exists(f3, false, '~> (f3) removed');
+	exists(f4, false, '~> (f4) removed');
 
-	t.end();
 });
 
-test('file does not exist', async t => {
+test('file does not exist', async () => {
 	let file = await premove('./404.txt');
-	t.is(file, false, '~> (file) returns false when missing');
+	assert.is(file, false, '~> (file) returns false when missing');
 
 	let dir = await premove('./foo');
-	t.is(dir, false, '~> (dir) returns false when missing');
-
-	t.end();
+	assert.is(dir, false, '~> (dir) returns false when missing');
 });
 
-test('options.cwd', async t => {
+test('options.cwd', async () => {
 	let file = await touch('./foo/hello.txt');
 	let dir = dirname(file);
 
-	t.exists(file, true, '(setup) file exists');
+	exists(file, true, '(setup) file exists');
 	await premove('hello.txt', { cwd: dir });
-	t.exists(file, false, '~> removed file');
+	exists(file, false, '~> removed file');
 
 	await premove(dir);
-	t.exists(dir, false, '~> cleanup');
-
-	t.end();
+	exists(dir, false, '~> cleanup');
 });
+
+test.run();
