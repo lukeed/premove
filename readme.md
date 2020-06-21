@@ -1,4 +1,4 @@
-# premove [![Build Status](https://badgen.now.sh/travis/lukeed/premove)](https://travis-ci.org/lukeed/premove)
+# premove [![CI](https://github.com/lukeed/premove/workflows/CI/badge.svg)](https://github.com/lukeed/premove/actions) [![codecov](https://badgen.now.sh/codecov/c/github/lukeed/premove)](https://codecov.io/gh/lukeed/premove)
 
 > A tiny (201B to 247B) utility to remove items recursively
 
