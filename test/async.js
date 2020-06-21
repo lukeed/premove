@@ -1,12 +1,12 @@
-import fs from 'fs';
 import { test } from 'uvu';
 import mkdirs from 'mk-dirs';
+import { promisify } from 'util';
 import * as assert from 'uvu/assert';
 import { dirname, resolve } from 'path';
-import { promisify } from 'util';
-import premove from '../src';
+import { existsSync, writeFile } from 'fs';
+import premove from '../src/async';
 
-const write = promisify(fs.writeFile);
+const write = promisify(writeFile);
 
 async function touch(str) {
 	let dir = dirname(str = resolve(str));
@@ -15,8 +15,7 @@ async function touch(str) {
 }
 
 function exists(str, bool, msg) {
-	msg = msg || (bool ? '~> (setup) exists' : '~> does not exist');
-	assert.is(fs.existsSync(str), bool, msg);
+	assert.is(existsSync(str), bool, msg);
 }
 
 test('exports', () => {

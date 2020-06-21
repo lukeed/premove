@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "repository": "lukeed/premove",
   "description": "A tiny (247B) utility to remove items recursively",
-  "module": "dist/premove.mjs",
-  "main": "dist/premove.js",
-  "types": "premove.d.ts",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
   "license": "MIT",
   "author": {
     "name": "Luke Edwards",
@@ -24,6 +24,9 @@
     "*.d.ts",
     "dist"
   ],
+  "modes": {
+    "default": "src/async.js"
+  },
   "keywords": [
     "del",
     "remove",
