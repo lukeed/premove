@@ -2,7 +2,7 @@
   "name": "premove",
   "version": "2.0.0",
   "repository": "lukeed/premove",
-  "description": "A tiny (247B) utility to remove items recursively",
+  "description": "A tiny (201B to 247B) utility to remove items recursively",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
   "types": "index.d.ts",
@@ -45,9 +45,9 @@
     "rimraf"
   ],
   "devDependencies": {
-    "bundt": "1.0.1",
+    "bundt": "1.0.2",
     "esm": "3.2.25",
-    "mk-dirs": "2.0.0",
-    "uvu": "0.0.14"
+    "mk-dirs": "2.1.0",
+    "uvu": "0.2.3"
   }
 }
