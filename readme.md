@@ -1,6 +1,6 @@
 # premove [![CI](https://github.com/lukeed/premove/workflows/CI/badge.svg)](https://github.com/lukeed/premove/actions) [![codecov](https://badgen.now.sh/codecov/c/github/lukeed/premove)](https://codecov.io/gh/lukeed/premove)
 
-> A tiny (201B to 247B) utility to remove items recursively
+> A tiny (202B to 249B) utility to remove items recursively
 
 This is a `Promise`-based utility that recursively removes files and directories. It's effectively `rm -rf` for Node.js.
 
@@ -19,14 +19,14 @@ There are two "versions" of `premove` available:
 
 #### "async"
 > **Node.js:** >= 8.x<br>
-> **Size (gzip):** 247 bytes<br>
+> **Size (gzip):** 249 bytes<br>
 > **Availability:** [CommonJS](https://unpkg.com/premove/dist/index.js), [ES Module](https://unpkg.com/premove/dist/index.mjs)
 
 This is the primary/default mode. It makes use of `async`/`await` and [`util.promisify`](https://nodejs.org/api/util.html#util_util_promisify_original).
 
 #### "sync"
 > **Node.js:** >= 6.x<br>
-> **Size (gzip):** 201 bytes<br>
+> **Size (gzip):** 202 bytes<br>
 > **Availability:** [CommonJS](https://unpkg.com/premove/sync/index.js), [ES Module](https://unpkg.com/premove/sync/index.mjs)
 
 This is the opt-in mode, ideal for scenarios where `async` usage cannot be supported.<br>In order to use it, simply make the following changes:
