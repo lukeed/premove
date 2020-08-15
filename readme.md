@@ -2,7 +2,7 @@
 
 > A tiny (202B to 249B) utility to remove items recursively
 
-This is a `Promise`-based utility that recursively removes files and directories. It's effectively `rm -rf` for Node.js.
+This is a `Promise`-based, cross-platform utility that recursively removes files and directories. It's effectively a programmatic `rm -rf` for Node.js. There's also a [CLI](#cli) for easy, cross-platform usage.
 
 > **Notice:** Node v12.10.0 includes the `recursive` option for [`fs.rmdir`](https://nodejs.org/api/fs.html#fs_fs_rmdir_path_options_callback) and [`fs.rmdirSync`](https://nodejs.org/api/fs.html#fs_fs_rmdirsync_path_options).
 
@@ -61,6 +61,23 @@ const dir = resolve('./foo/bar');
 await premove('hello.txt', { cwd: dir });
 ```
 
+## CLI
+
+A `premove` binary is available as of v4.0.0. <br>It accepts an optional `--cwd` value and a list of paths to delete.
+
+> **Important:** By default `premove` refuses to delete:
+> * the [`os.homedir`](https://nodejs.org/api/os.html#os_os_homedir)
+> * the system root (`/`, `C:\\`, etc)
+> * items not contained by `--cwd` path
+
+```sh
+# remove "foo" and "bar" via `npx`
+$ npx premove foo bar
+
+# install globally, use whenever
+$ npm install premove -g
+$ premove foo bar
+```
 
 ## API
 
