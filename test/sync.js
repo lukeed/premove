@@ -4,7 +4,7 @@ import { promisify } from 'util';
 import * as assert from 'uvu/assert';
 import { dirname, resolve } from 'path';
 import { existsSync, writeFile } from 'fs';
-import premove from '../src/sync';
+import { premove } from '../src/sync';
 
 const write = promisify(writeFile);
 

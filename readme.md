@@ -32,15 +32,15 @@ This is the primary/default mode. It makes use of `async`/`await` and [`util.pro
 This is the opt-in mode, ideal for scenarios where `async` usage cannot be supported.<br>In order to use it, simply make the following changes:
 
 ```diff
--import premove from 'premove';
-+import premove from 'premove/sync';
+-import { premove } from 'premove';
++import { premove } from 'premove/sync';
 ```
 
 ## Usage
 
 ```js
-import premove from 'premove';
 import { resolve } from 'path';
+import { premove } from 'premove';
 
 // Async/await
 try {

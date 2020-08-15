@@ -3,11 +3,9 @@ declare namespace premove {
 }
 
 declare module 'premove' {
-	function premove(filepath: string, options?: Partial<premove.Options>): Promise<void> | false;
-	export = premove;
+	export function premove(filepath: string, options?: Partial<premove.Options>): Promise<void> | false;
 }
 
 declare module 'premove/sync' {
-	function premove(filepath: string, options?: Partial<premove.Options>): void | false;
-	export = premove;
+	export function premove(filepath: string, options?: Partial<premove.Options>): void | false;
 }

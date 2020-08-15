@@ -11,7 +11,7 @@ function walker(str) {
 	} else fs.unlinkSync(str);
 }
 
-export default function (dir, opts={}) {
+export function premove(dir, opts={}) {
 	let str = resolve(opts.cwd || '.', dir);
 	return fs.existsSync(str) && walker(str);
 }
