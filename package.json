@@ -12,6 +12,9 @@
     "email": "luke.edwards05@gmail.com",
     "url": "https://lukeed.com"
   },
+  "bin": {
+    "premove": "./bin.js"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -24,6 +27,7 @@
   },
   "files": [
     "*.d.ts",
+    "bin.js",
     "dist",
     "sync"
   ],
