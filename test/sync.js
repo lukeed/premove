@@ -1,5 +1,5 @@
 import { test } from 'uvu';
-import mkdirs from 'mk-dirs';
+import { mkdir } from 'mk-dirs';
 import { promisify } from 'util';
 import * as assert from 'uvu/assert';
 import { dirname, resolve } from 'path';
@@ -10,7 +10,7 @@ const write = promisify(writeFile);
 
 async function touch(str) {
 	let dir = dirname(str = resolve(str));
-	await mkdirs(dir).then(() => write(str, 'hello'));
+	await mkdir(dir).then(() => write(str, 'hello'));
 	return str;
 }
 
@@ -41,7 +41,7 @@ test('remove single file', async () => {
 
 test('remove single directory', async () => {
 	let str = resolve('./foo');
-	await mkdirs(str);
+	await mkdir(str);
 	exists(str, true);
 
 	premove(str);
