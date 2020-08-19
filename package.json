@@ -49,7 +49,7 @@
     "rimraf"
   ],
   "devDependencies": {
-    "bundt": "1.0.2",
+    "bundt": "1.1.0",
     "esm": "3.2.25",
     "mk-dirs": "2.1.0",
     "uvu": "0.3.3"
