@@ -1,6 +1,6 @@
 # premove [![CI](https://github.com/lukeed/premove/workflows/CI/badge.svg)](https://github.com/lukeed/premove/actions) [![codecov](https://badgen.now.sh/codecov/c/github/lukeed/premove)](https://codecov.io/gh/lukeed/premove)
 
-> A tiny (202B to 249B) utility to remove items recursively
+> A tiny (208B to 260B) utility to remove items recursively
 
 This is a `Promise`-based, cross-platform utility that recursively removes files and directories. It's effectively a programmatic `rm -rf` for Node.js. There's also a [CLI](#cli) for easy, cross-platform usage.
 
