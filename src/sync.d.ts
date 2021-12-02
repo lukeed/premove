@@ -1,1 +1,1 @@
-export function premove(filepath: string, options?: { cwd?: string }): void | false;
+export function premove(filepath: string, options?: { cwd?: string }): boolean;

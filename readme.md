@@ -51,7 +51,8 @@ try {
 
 // Promise
 premove('./foobar').then(val => {
-  console.log(val); //=> undefined
+  console.log(typeof val);
+  //=> boolean
 }).catch(err => {
   //
 });
@@ -63,7 +64,7 @@ await premove('hello.txt', { cwd: dir });
 
 ## CLI
 
-A `premove` binary is available as of v4.0.0. <br>It accepts an optional `--cwd` value and a list of paths to delete.
+A `premove` binary is available as of v3.0.0. <br>It accepts an optional `--cwd` value and a list of paths to delete.
 
 > **Important:** By default `premove` refuses to delete:
 > * the [`os.homedir`](https://nodejs.org/api/os.html#os_os_homedir)
@@ -82,10 +83,9 @@ $ premove foo bar
 ## API
 
 ### premove(str, opts={})
-Returns: `Promise<undefined>` or `false`
+Returns: `Promise<boolean>`
 
-Returns a Promise that resolves to `undefined` once complete.<br>
-Returns `false` immediately if the initial filepath (`str`) does not exist.
+Returns a Promise that resolves with a boolean value. <br>If `true`, indicates that the `str` input _did exist_ and was successfully removed. A `false` value indicates that the `str` input _did not exist_, meaning nothing needed to be removed.
 
 > **Important:**<br>The `sync` and `async` versions share the same API.<br>The **only** difference is that `sync` is not Promise-based.
 
@@ -109,7 +109,7 @@ Defaults to the `process.cwd()` – aka, the directory that your command is run 
 ## Related
 
 - [totalist](https://github.com/lukeed/totalist) - A tiny (195B to 224B) utility to recursively list all (total) files in a directory
-- [mk-dirs](https://github.com/lukeed/mk-dirs) - A tiny (420B) utility to make a directory and its parents, recursively
+- [mk-dirs](https://github.com/lukeed/mk-dirs) - A tiny (381B to 419B) utility to make a directory and its parents, recursively
 - [escalade](https://github.com/lukeed/escalade) - A tiny (183B) and fast utility to ascend parent directories
 
 

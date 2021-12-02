@@ -30,7 +30,8 @@ test('remove single file', async () => {
 	exists(bar, true);
 
 	let out = await premove(foo);
-	assert.is(out, undefined, '~> returns no output');
+	assert.type(out, 'boolean', '~> returns boolean');
+	assert.is(out, true, '~> returns `true` because exists');
 
 	exists(foo, false, '~> (foo) removed');
 	exists(bar, true, '~> (bar) exists');
@@ -44,7 +45,8 @@ test('remove single directory', async () => {
 	await mkdir(str);
 	exists(str, true);
 
-	await premove(str);
+	let output = await premove(str);
+	assert.is(output, true, '~> existed');
 	exists(str, false, '~> removed dir');
 });
 
@@ -53,7 +55,8 @@ test('remove file, leave directory', async () => {
 	let bar = dirname(foo);
 	exists(foo, true);
 
-	await premove(foo);
+	let output = await premove(foo);
+	assert.is(output, true, '~> (foo) existed');
 	exists(foo, false, '~> (foo) file removed');
 	exists(bar, true, '~> (bar) dir exists');
 
@@ -68,7 +71,9 @@ test('remove directory and its contents', async () => {
 	exists(dir, true, '(setup) dir exists');
 	exists(file, true, '(setup) file exists');
 
-	await premove(dir);
+	let output = await premove(dir);
+	assert.is(output, true, '~> (dir) existed');
+
 	exists(dir, false, '~> (dir) removed');
 	exists(file, false, '~> (file) removed');
 });
@@ -82,7 +87,9 @@ test('remove directory, leave parent', async () => {
 	exists(file, true, '(setup) file exists');
 	exists(baz, true, '(setup) "baz" exists');
 
-	await premove(dir);
+	let output = await premove(dir);
+	assert.is(output, true, '~> (dir) existed');
+
 	exists(dir, false, '~> (dir) removed');
 	exists(file, false, '~> (file) removed');
 	exists(baz, true, '~> (baz) still exists');
@@ -106,14 +113,14 @@ test('remove directory recursively', async () => {
 	exists(f3, true, '(setup) f3 exists');
 	exists(f4, true, '(setup) f4 exists');
 
-	await premove(dir);
+	let output = await premove(dir);
+	assert.is(output, true, '~> (dir) existed');
 
 	exists(dir, false, '~> (dir) removed');
 	exists(f1, false, '~> (f1) removed');
 	exists(f2, false, '~> (f2) removed');
 	exists(f3, false, '~> (f3) removed');
 	exists(f4, false, '~> (f4) removed');
-
 });
 
 test('file does not exist', async () => {
@@ -132,7 +139,8 @@ test('options.cwd', async () => {
 	await premove('hello.txt', { cwd: dir });
 	exists(file, false, '~> removed file');
 
-	await premove(dir);
+	let output = await premove(dir);
+	assert.is(output, true, '~> (dir) existed');
 	exists(dir, false, '~> cleanup');
 });
 

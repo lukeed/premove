@@ -12,6 +12,7 @@ function walker(str) {
 }
 
 export function premove(dir, opts={}) {
-	let str = resolve(opts.cwd || '.', dir);
-	return fs.existsSync(str) && walker(str);
+	let bool, str = resolve(opts.cwd || '.', dir);
+	if (bool=fs.existsSync(str)) walker(str);
+	return bool;
 }

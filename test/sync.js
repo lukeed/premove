@@ -30,7 +30,8 @@ test('remove single file', async () => {
 	exists(bar, true);
 
 	let out = premove(foo);
-	assert.is(out, undefined, '~> returns no output');
+	assert.type(out, 'boolean', '~> returns boolean')
+	assert.is(out, true, '~> returns `true` because existed');
 
 	exists(foo, false, '~> (foo) removed');
 	exists(bar, true, '~> (bar) exists');
@@ -53,7 +54,9 @@ test('remove file, leave directory', async () => {
 	let bar = dirname(foo);
 	exists(foo, true);
 
-	premove(foo);
+	let output = premove(foo);
+	assert.is(output, true, '~> (foo) existed');
+
 	exists(foo, false, '~> (foo) file removed');
 	exists(bar, true, '~> (bar) dir exists');
 
@@ -68,7 +71,9 @@ test('remove directory and its contents', async () => {
 	exists(dir, true, '(setup) dir exists');
 	exists(file, true, '(setup) file exists');
 
-	premove(dir);
+	let output = premove(dir);
+	assert.is(output, true, '~> (dir) existed');
+
 	exists(dir, false, '~> (dir) removed');
 	exists(file, false, '~> (file) removed');
 });
@@ -82,7 +87,9 @@ test('remove directory, leave parent', async () => {
 	exists(file, true, '(setup) file exists');
 	exists(baz, true, '(setup) "baz" exists');
 
-	premove(dir);
+	let output = premove(dir);
+	assert.is(output, true, '~> (dir) existed');
+
 	exists(dir, false, '~> (dir) removed');
 	exists(file, false, '~> (file) removed');
 	exists(baz, true, '~> (baz) still exists');
@@ -106,7 +113,8 @@ test('remove directory recursively', async () => {
 	exists(f3, true, '(setup) f3 exists');
 	exists(f4, true, '(setup) f4 exists');
 
-	premove(dir);
+	let output = premove(dir);
+	assert.is(output, true, '~> (dir) existed');
 
 	exists(dir, false, '~> (dir) removed');
 	exists(f1, false, '~> (f1) removed');
@@ -129,10 +137,12 @@ test('options.cwd', async () => {
 	let dir = dirname(file);
 
 	exists(file, true, '(setup) file exists');
-	premove('hello.txt', { cwd: dir });
+	let output = premove('hello.txt', { cwd: dir });
+	assert.is(output, true, '~> (hello) existed');
 	exists(file, false, '~> removed file');
 
-	premove(dir);
+	output = premove(dir);
+	assert.is(output, true, '~> (dir) existed');
 	exists(dir, false, '~> cleanup');
 });
 

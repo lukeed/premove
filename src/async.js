@@ -17,7 +17,8 @@ async function walker(str) {
 	return unlink(str);
 }
 
-export function premove(dir, opts={}) {
-	let str = resolve(opts.cwd || '.', dir);
-	return fs.existsSync(str) && walker(str);
+export async function premove(dir, opts={}) {
+	let bool, str = resolve(opts.cwd || '.', dir);
+	if (bool=fs.existsSync(str)) await walker(str);
+	return bool;
 }

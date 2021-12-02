@@ -1,1 +1,1 @@
-export function premove(filepath: string, options?: { cwd?: string }): Promise<void> | false;
+export function premove(filepath: string, options?: { cwd?: string }): Promise<boolean>;
