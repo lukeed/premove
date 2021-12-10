@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "benchmark": "2.1.4",
+    "del": "6.0.0",
+    "premove": "file:../",
+    "rimraf": "3.0.2"
+  }
+}

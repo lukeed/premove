@@ -7,3 +7,5 @@ node_modules
 /dist
 /*.d.ts
 /sync
+
+/bench/fixtures
